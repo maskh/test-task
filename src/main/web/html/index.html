@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <script src="/js/bootstrap/scripts.js"></script>
+    <script src="/js/controllers.js"></script>
+    <style>
+        @import url('/css/bootstrap.min.css');
+        @import url('/css/styles.css');
+    </style>
+</head>
+<body ng-app='demoDataModule'>
+<div class="page-container">
+
+    <!-- top navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Akvelon Demo Project</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-left">
+
+            <!-- sidebar -->
+            <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+                    <ul class="nav" id="sidebar-nav" ng-controller='buttonClickHandler' ng-show='dataVisible'>
+                        <li><a ng-click='refresh()'>Refresh</a></li>
+                        <li><a ng-click='edit()'>Edit</a></li>
+                        <li><a ng-click="deleteRows()">Delete</a></li>
+                    </ul>
+                </div>
+                <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+                    <ul class="nav" id="sidebar-nav-2" ng-controller='updateDataController' ng-show='!dataVisible'>
+                        <li><a ng-click='add(editLine)' ng-show='showAddButton'>Add</a></li>
+                        <li><a ng-click='save(editLine)' ng-show='showSaveButton'>Save</a></li>
+                        <li><a ng-click='cancel()'>Cancel</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- main area -->
+            <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+                <div ng-controller='showDataController' ng-show='dataVisible'>
+                    <table id="dataTable" ng-table>
+                        <tr>
+                            <th/>
+                            <th ng-repeat="col in columns">{{col}}</th>
+                        </tr>
+                        <tr ng-repeat='row in rows'>
+                            <td><input type='checkbox' id='{{row.id}}' ng-model='row.selected'></td>
+                            <td>{{row.id}}</td>
+                            <td>{{row.ch}}</td>
+                            <td>{{row.varch}}</td>
+                            <td>{{row.dt}}</td>
+                        </tr>
+                    </table>
+                </div><!--showDataController-->
+
+                <div ng-controller='updateDataController' ng-show='!dataVisible'>
+                    <div>
+                        <table id="inputDataTable" ng-table>
+                            <tr>
+                                <th ng-repeat="col in columns">{{col}}</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input name='editLine.id' ng-model='editLine.id'>
+                                </td>
+                                <td>
+                                    <input name='editLine.ch' ng-model='editLine.ch'>
+                                </td>
+                                <td>
+                                    <input name='editLine.varch' ng-model='editLine.varch'>
+                                </td>
+                                <td>
+                                    <input name="editLine.dt" ng-model='editLine.dt'>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div><!--updateDataController-->
+            </div><!-- /.col-xs-12 main -->
+        </div><!--/.row-->
+    </div><!--/.container-->
+</div><!--/.page-container-->
+</body>
+</html>
